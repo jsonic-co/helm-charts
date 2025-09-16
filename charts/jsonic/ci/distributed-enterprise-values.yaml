@@ -1,0 +1,47 @@
+deploymentMode: distributed
+jsonic:
+  backend:
+    enterpriseLicenseKey: your-enterprise-license-key
+frontend:
+  image:
+    repository: jsonic-co/jsonic-co-frontend-enterprise
+  ingress:
+    enabled: true
+    hostname: frontend.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+backend:
+  image:
+    repository: jsonic-co/jsonic-co-backend-enterprise
+  ingress:
+    enabled: true
+    hostname: backend.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+admin:
+  image:
+    repository: jsonic-co/jsonic-co-admin-enterprise
+  ingress:
+    enabled: true
+    hostname: admin.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+postgresql:
+  enabled: true
+  auth:
+    username: jsonic
+    password: jsonic
+    database: jsonic
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete

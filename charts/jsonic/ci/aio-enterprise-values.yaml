@@ -1,0 +1,25 @@
+deploymentMode: aio
+jsonic:
+  backend:
+    enterpriseLicenseKey: your-enterprise-license-key
+aio:
+  image:
+    repository: jsonic-co/jsonic-co-enterprise
+  ingress:
+    enabled: true
+    hostname: jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+postgresql:
+  enabled: true
+  auth:
+    username: jsonic
+    password: jsonic
+    database: jsonic
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete

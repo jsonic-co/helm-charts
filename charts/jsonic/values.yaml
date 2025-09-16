@@ -1,0 +1,1905 @@
+# @section -- Global Parameters
+
+global:
+  # -- Global Docker image registry
+  # @section -- Global Parameters
+  imageRegistry: ""
+  # -- Global Docker registry secret names as an array
+  # @section -- Global Parameters
+  imagePullSecrets: []
+  # -- Global default storage class for persistent volumes
+  # @section -- Global Parameters
+  defaultStorageClass: ""
+  security:
+    # -- Allows skipping image verification
+    # @section -- Global Parameters
+    allowInsecureImages: false
+
+# @section -- Common Parameters
+
+# -- String to override the chart name
+# @section -- Common Parameters
+nameOverride: ""
+# -- String to override the fully qualified name
+# @section -- Common Parameters
+fullnameOverride: ""
+# -- String to override the namespace
+# @section -- Common Parameters
+namespaceOverride: ""
+# -- Labels to add to all deployed objects
+# @section -- Common Parameters
+commonLabels: {}
+# -- Annotations to add to all deployed objects
+# @section -- Common Parameters
+commonAnnotations: {}
+# -- Kubernetes cluster domain name
+# @section -- Common Parameters
+clusterDomain: cluster.local
+# -- Array of extra objects to deploy with the release
+# @section -- Common Parameters
+extraDeploy: []
+
+# @section -- Jsonic Common Parameters
+
+# -- Deployment mode for Jsonic (aio (all-in-one) or distributed)
+# @section -- Jsonic Common Parameters
+deploymentMode: aio
+
+# -- Name of existing secret containing Jsonic secrets
+# @section -- Jsonic Common Parameters
+existingSecret: ""
+
+# @section -- Jsonic Application Parameters
+
+jsonic:
+  frontend:
+    # -- Base URL where the Jsonic frontend will be accessible from
+    # @section -- Jsonic Application Parameters
+    baseUrl: ""
+    # -- URL used to generate shortcodes for sharing, can be the same as baseUrl
+    # @section -- Jsonic Application Parameters
+    shortcodeBaseUrl: ""
+    # -- URL where the Jsonic admin dashboard will be accessible from
+    # @section -- Jsonic Application Parameters
+    adminUrl: ""
+
+    # -- URL for GraphQL endpoint within the Jsonic instance
+    # @section -- Jsonic Application Parameters
+    backendGqlUrl: ""
+    # -- URL for WebSocket endpoint within the Jsonic instance
+    # @section -- Jsonic Application Parameters
+    backendWsUrl: ""
+    # -- URL for REST API endpoint within the Jsonic instance
+    # @section -- Jsonic Application Parameters
+    backendApiUrl: ""
+
+    # -- Link to Terms of Service page (optional)
+    # @section -- Jsonic Application Parameters
+    appTosLink: ""
+    # -- Link to Privacy Policy page (optional)
+    # @section -- Jsonic Application Parameters
+    appPrivacyPolicyLink: ""
+
+    # -- Enable subpath based access (required for desktop app support)
+    # @section -- Jsonic Application Parameters
+    enableSubpathBasedAccess: true
+
+    # -- Enable local proxy server for routing API requests (requires subpath access). Enterprise Edition required.
+    # @section -- Jsonic Application Parameters
+    localProxyServerEnabled: false
+    # -- URL of proxy server for routing API requests (optional). Enterprise Edition required.
+    # @section -- Jsonic Application Parameters
+    proxyAppUrl: ""
+
+  backend:
+    # -- Alternate port for AIO container endpoint when using subpath access mode
+    # @section -- Jsonic Application Parameters
+    aioAlternatePort: 80
+
+    authToken:
+      # -- Secret key for JWT token generation and validation (auto-generated if empty)
+      # @section -- Jsonic Application Parameters
+      jwtSecret: ""
+      # -- Complexity of the SALT used for hashing (higher = more secure)
+      # @section -- Jsonic Application Parameters
+      tokenSaltComplexity: 10
+      # -- Duration of magic link token validity for sign-in (in days)
+      # @section -- Jsonic Application Parameters
+      magicLinkTokenValidity: 3
+      # -- Validity of refresh token for authentication (in milliseconds)
+      # @section -- Jsonic Application Parameters
+      refreshTokenValidity: "604800000"
+      # -- Validity of access token for authentication (in milliseconds)
+      # @section -- Jsonic Application Parameters
+      accessTokenValidity: "86400000"
+      # -- Secret key for session management (auto-generated if empty)
+      # @section -- Jsonic Application Parameters
+      sessionSecret: ""
+
+    # -- Allow secure cookies (recommended for HTTPS deployments)
+    # @section -- Jsonic Application Parameters
+    allowSecureCookies: true
+    # -- 32-character key for encrypting sensitive data stored in database (auto-generated if empty)
+    # @section -- Jsonic Application Parameters
+    dataEncryptionKey: ""
+
+    # -- Fallback URL for debugging when redirects fail
+    # @section -- Jsonic Application Parameters
+    redirectUrl: ""
+
+    # -- List of origins allowed to interact with the app through cross-origin requests
+    # @section -- Jsonic Application Parameters
+    whitelistedOrigins: []
+
+    auth:
+      # -- List of allowed authentication providers (email, google, github, microsoft, oidc, saml)
+      # @section -- Jsonic Application Parameters
+      allowedProviders:
+        - email
+
+      google:
+        # -- Google OAuth client ID
+        # @section -- Jsonic Application Parameters
+        clientId: ""
+        # -- Google OAuth client secret
+        # @section -- Jsonic Application Parameters
+        clientSecret: ""
+        # -- Google OAuth callback URL
+        # @section -- Jsonic Application Parameters
+        callbackUrl: ""
+        # -- Google OAuth scopes to request
+        # @section -- Jsonic Application Parameters
+        scope:
+          - email
+          - profile
+
+      github:
+        # -- GitHub OAuth client ID
+        # @section -- Jsonic Application Parameters
+        clientId: ""
+        # -- GitHub OAuth client secret
+        # @section -- Jsonic Application Parameters
+        clientSecret: ""
+        # -- GitHub OAuth callback URL
+        # @section -- Jsonic Application Parameters
+        callbackUrl: ""
+        # -- GitHub OAuth scopes to request
+        # @section -- Jsonic Application Parameters
+        scope:
+          - user:email
+
+      githubEnterprise:
+        # -- Enable GitHub Enterprise authentication. Enterprise Edition required.
+        # @section -- Jsonic Application Parameters
+        enabled: false
+        # -- GitHub Enterprise authorization URL
+        # @section -- Jsonic Application Parameters
+        authorizationUrl: ""
+        # -- GitHub Enterprise token URL
+        # @section -- Jsonic Application Parameters
+        tokenUrl: ""
+        # -- GitHub Enterprise user profile URL
+        # @section -- Jsonic Application Parameters
+        userProfileUrl: ""
+        # -- GitHub Enterprise user email URL
+        # @section -- Jsonic Application Parameters
+        userEmailUrl: ""
+
+      microsoft:
+        # -- Microsoft OAuth client ID
+        # @section -- Jsonic Application Parameters
+        clientId: ""
+        # -- Microsoft OAuth client secret
+        # @section -- Jsonic Application Parameters
+        clientSecret: ""
+        # -- Microsoft OAuth callback URL
+        # @section -- Jsonic Application Parameters
+        callbackUrl: ""
+        # -- Microsoft OAuth scopes to request
+        # @section -- Jsonic Application Parameters
+        scope: user.read
+        # -- Microsoft OAuth tenant ID (common for multi-tenant apps)
+        # @section -- Jsonic Application Parameters
+        tenant: ""
+
+      oidc:
+        # -- OIDC provider display name
+        # @section -- Jsonic Application Parameters
+        providerName: ""
+        # -- OIDC issuer URL
+        # @section -- Jsonic Application Parameters
+        issuer: ""
+        # -- OIDC authorization URL
+        # @section -- Jsonic Application Parameters
+        authorizationUrl: ""
+        # -- OIDC token URL
+        # @section -- Jsonic Application Parameters
+        tokenUrl: ""
+        # -- OIDC user info URL
+        # @section -- Jsonic Application Parameters
+        userInfoUrl: ""
+        # -- OIDC client ID
+        # @section -- Jsonic Application Parameters
+        clientId: ""
+        # -- OIDC client secret
+        # @section -- Jsonic Application Parameters
+        clientSecret: ""
+        # -- OIDC callback URL
+        # @section -- Jsonic Application Parameters
+        callbackUrl: ""
+        # -- OIDC scopes to request
+        # @section -- Jsonic Application Parameters
+        scope:
+          - openid
+          - profile
+          - email
+
+      saml:
+        # -- SAML issuer identifier. Enterprise Edition required.
+        # @section -- Jsonic Application Parameters
+        issuer: ""
+        # -- SAML audience identifier
+        # @section -- Jsonic Application Parameters
+        audience: ""
+        # -- SAML callback URL
+        # @section -- Jsonic Application Parameters
+        callbackUrl: ""
+        # -- SAML certificate for signature verification
+        # @section -- Jsonic Application Parameters
+        cert: ""
+        # -- SAML identity provider entry point URL
+        # @section -- Jsonic Application Parameters
+        entryPoint: ""
+        # -- Require signed SAML assertions
+        # @section -- Jsonic Application Parameters
+        wantAssertionsSigned: true
+        # -- Require signed SAML responses
+        # @section -- Jsonic Application Parameters
+        wantResponseSigned: false
+
+    mailer:
+      # -- Enable SMTP mailer for email delivery
+      # @section -- Jsonic Application Parameters
+      smtpEnabled: true
+      # -- Use custom SMTP configuration instead of SMTP URL
+      # @section -- Jsonic Application Parameters
+      useCustomConfigs: false
+      # -- Email address to use as sender
+      # @section -- Jsonic Application Parameters
+      addressFrom: no-reply@example.com
+      # -- SMTP URL for email delivery (used when useCustomConfigs is false)
+      # @section -- Jsonic Application Parameters
+      smtpUrl: smtps://user:pass@smtp.example.com
+      # -- SMTP host (used when useCustomConfigs is true)
+      # @section -- Jsonic Application Parameters
+      smtpHost: ""
+      # -- SMTP port (used when useCustomConfigs is true)
+      # @section -- Jsonic Application Parameters
+      smtpPort: 587
+      # -- Use secure connection for SMTP (used when useCustomConfigs is true)
+      # @section -- Jsonic Application Parameters
+      smtpSecure: true
+      # -- SMTP username (used when useCustomConfigs is true)
+      # @section -- Jsonic Application Parameters
+      smtpUser: ""
+      # -- SMTP password (used when useCustomConfigs is true)
+      # @section -- Jsonic Application Parameters
+      smtpPassword: ""
+      # -- Reject unauthorized TLS connections
+      # @section -- Jsonic Application Parameters
+      tlsRejectUnauthorized: true
+
+    rateLimit:
+      # -- Time window for rate limiting (in seconds)
+      # @section -- Jsonic Application Parameters
+      ttl: 60
+      # -- Maximum number of requests per IP within TTL window
+      # @section -- Jsonic Application Parameters
+      max: 100
+
+    # -- Enterprise license key for Jsonic Enterprise features
+    # @section -- Jsonic Application Parameters
+    enterpriseLicenseKey: ""
+
+    clickhouse:
+      # -- Enable audit logs collection to ClickHouse. Enterprise Edition required.
+      # @section -- Jsonic Application Parameters
+      allowAuditLogs: false
+
+    # -- Enable horizontal scaling with Redis for state management. Enterprise Edition required.
+    # @section -- Jsonic Application Parameters
+    horizontalScalingEnabled: false
+
+# @section -- Jsonic AIO Parameters
+
+aio:
+  image:
+    # -- Jsonic image repository
+    # @section -- Jsonic AIO Parameters
+    repository: jsonic-co/jsonic-co
+    # -- Jsonic image pull policy
+    # @section -- Jsonic AIO Parameters
+    pullPolicy: IfNotPresent
+    # -- Jsonic image tag
+    # @section -- Jsonic AIO Parameters
+    tag: ""
+
+  # -- Number of Jsonic replicas
+  # @section -- Jsonic AIO Parameters
+  replicaCount: 1
+
+  containerPorts:
+    # -- Jsonic HTTP container port
+    # @section -- Jsonic AIO Parameters
+    http: 80
+    # -- Jsonic HTTPS container port
+    # @section -- Jsonic AIO Parameters
+    https: 443
+    # -- Jsonic frontend container port (for multiport access mode)
+    # @section -- Jsonic AIO Parameters
+    frontend: 3000
+    # -- Jsonic desktop container port (for multiport access mode)
+    # @section -- Jsonic AIO Parameters
+    desktop: 3200
+    # -- Jsonic backend container port (for multiport access mode)
+    # @section -- Jsonic AIO Parameters
+    backend: 3170
+    # -- Jsonic admin container port (for multiport access mode)
+    # @section -- Jsonic AIO Parameters
+    admin: 3100
+
+  readinessProbe:
+    # -- Enable readiness probe
+    # @section -- Jsonic AIO Parameters
+    enabled: true
+    # -- Initial delay seconds for readiness probe
+    # @section -- Jsonic AIO Parameters
+    initialDelaySeconds: 0
+    # -- Period seconds for readiness probe
+    # @section -- Jsonic AIO Parameters
+    periodSeconds: 10
+    # -- Timeout seconds for readiness probe
+    # @section -- Jsonic AIO Parameters
+    timeoutSeconds: 1
+    # -- Failure threshold for readiness probe
+    # @section -- Jsonic AIO Parameters
+    failureThreshold: 3
+    # -- Success threshold for readiness probe
+    # @section -- Jsonic AIO Parameters
+    successThreshold: 1
+
+  # -- Custom liveness probe that overrides the default one
+  # @section -- Jsonic AIO Parameters
+  customLivenessProbe: {}
+
+  # -- Custom readiness probe that overrides the default one
+  # @section -- Jsonic AIO Parameters
+  customReadinessProbe: {}
+
+  # -- Custom startup probe that overrides the default one
+  # @section -- Jsonic AIO Parameters
+  customStartupProbe: {}
+
+  # -- Array of extra environment variables to be added to Jsonic containers
+  # @section -- Jsonic AIO Parameters
+  extraEnvVars: []
+  # -- Name of existing ConfigMap containing extra environment variables
+  # @section -- Jsonic AIO Parameters
+  extraEnvVarsCM: ""
+  # -- Name of existing Secret containing extra environment variables
+  # @section -- Jsonic AIO Parameters
+  extraEnvVarsSecret: ""
+
+  # -- Set container resources according to one common preset (allowed values: nano, small, medium, large, xlarge, 2xlarge)
+  # @section -- Jsonic AIO Parameters
+  resourcesPreset: "nano"
+  # -- Set container resources for Jsonic (overrides resourcesPreset)
+  # @section -- Jsonic AIO Parameters
+  resources: {}
+
+  # -- Annotations to add to Jsonic pods
+  # @section -- Jsonic AIO Parameters
+  podAnnotations: {}
+  # -- Labels to add to Jsonic pods
+  # @section -- Jsonic AIO Parameters
+  podLabels: {}
+
+  # -- Security context for Jsonic pods
+  # @section -- Jsonic AIO Parameters
+  podSecurityContext: {}
+  # -- Security context for Jsonic containers
+  # @section -- Jsonic AIO Parameters
+  securityContext: {}
+
+  updateStrategy:
+    # -- Deployment update strategy type (RollingUpdate or Recreate)
+    # @section -- Jsonic AIO Parameters
+    type: RollingUpdate
+
+  pdb:
+    # -- Create PodDisruptionBudget for Jsonic deployment
+    # @section -- Jsonic AIO Parameters
+    create: false
+    # -- Minimum number of available pods during disruptions
+    # @section -- Jsonic AIO Parameters
+    minAvailable: ""
+    # -- Maximum number of unavailable pods during disruptions
+    # @section -- Jsonic AIO Parameters
+    maxUnavailable: ""
+
+  autoscaling:
+    # -- Enable autoscaling for Jsonic deployment
+    # @section -- Jsonic AIO Parameters
+    enabled: false
+    # -- Minimum number of Jsonic replicas
+    # @section -- Jsonic AIO Parameters
+    minReplicas: 1
+    # -- Maximum number of Jsonic replicas
+    # @section -- Jsonic AIO Parameters
+    maxReplicas: 100
+    # -- Target CPU utilization percentage for autoscaling
+    # @section -- Jsonic AIO Parameters
+    targetCPUUtilizationPercentage: 80
+    # -- Target memory utilization percentage for autoscaling
+    # @section -- Jsonic AIO Parameters
+    targetMemoryUtilizationPercentage: 80
+
+  # -- Node labels for Jsonic pods assignment
+  # @section -- Jsonic AIO Parameters
+  nodeSelector: {}
+
+  # -- Tolerations for Jsonic pods assignment
+  # @section -- Jsonic AIO Parameters
+  tolerations: []
+
+  # -- Affinity for Jsonic pods assignment
+  # @section -- Jsonic AIO Parameters
+  affinity: {}
+
+  # -- Topology spread constraints for Jsonic pods assignment
+  # @section -- Jsonic AIO Parameters
+  topologySpreadConstraints: []
+
+  # -- Extra volumes to add to Jsonic deployment
+  # @section -- Jsonic AIO Parameters
+  volumes: []
+
+  # -- Extra volume mounts to add to Jsonic containers
+  # @section -- Jsonic AIO Parameters
+  volumeMounts: []
+
+  service:
+    # -- Kubernetes service type
+    # @section -- Jsonic AIO Parameters
+    type: ClusterIP
+    ports:
+      # -- Service HTTP port
+      # @section -- Jsonic AIO Parameters
+      http: 80
+      # -- Service HTTPS port
+      # @section -- Jsonic AIO Parameters
+      https: 443
+      # -- Frontend service HTTP port (when multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      frontend: 3000
+      # -- Desktop service HTTP port (when multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      desktop: 3200
+      # -- Backend service HTTP port (when multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      backend: 3170
+      # -- Admin service HTTP port (when multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      admin: 3100
+    # -- Static cluster IP address (optional)
+    # @section -- Jsonic AIO Parameters
+    clusterIP: ""
+    nodePorts:
+      # -- NodePort for HTTP (when service type is NodePort)
+      # @section -- Jsonic AIO Parameters
+      http: ""
+      # -- NodePort for HTTPS (when service type is NodePort)
+      # @section -- Jsonic AIO Parameters
+      https: ""
+      # -- NodePort for frontend (when service type is NodePort and multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      frontend: ""
+      # -- NodePort for desktop (when service type is NodePort and multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      desktop: ""
+      # -- NodePort for backend (when service type is NodePort and multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      backend: ""
+      # -- NodePort for admin (when service type is NodePort and multiport access is enabled)
+      # @section -- Jsonic AIO Parameters
+      admin: ""
+    # -- Load balancer IP address (when service type is LoadBalancer)
+    # @section -- Jsonic AIO Parameters
+    loadBalancerIP: ""
+    # -- Load balancer source IP ranges (when service type is LoadBalancer)
+    # @section -- Jsonic AIO Parameters
+    loadBalancerSourceRanges: []
+    # -- External traffic policy (Cluster or Local)
+    # @section -- Jsonic AIO Parameters
+    externalTrafficPolicy: Cluster
+    # -- Service annotations
+    # @section -- Jsonic AIO Parameters
+    annotations: {}
+    # -- Session affinity (None or ClientIP)
+    # @section -- Jsonic AIO Parameters
+    sessionAffinity: None
+    # -- Session affinity configuration
+    # @section -- Jsonic AIO Parameters
+    sessionAffinityConfig: {}
+    # -- Extra service ports
+    # @section -- Jsonic AIO Parameters
+    extraPorts: []
+
+  networkPolicy:
+    # -- Enable NetworkPolicy for Jsonic pods
+    # @section -- Jsonic AIO Parameters
+    enabled: false
+    # -- Allow external traffic to Jsonic pods
+    # @section -- Jsonic AIO Parameters
+    allowExternal: true
+    # -- Allow external egress traffic from Jsonic pods
+    # @section -- Jsonic AIO Parameters
+    allowExternalEgress: true
+    # -- Add external client access to NetworkPolicy
+    # @section -- Jsonic AIO Parameters
+    addExternalClientAccess: true
+    # -- Extra ingress rules for NetworkPolicy
+    # @section -- Jsonic AIO Parameters
+    extraIngress: []
+    # -- Extra egress rules for NetworkPolicy
+    # @section -- Jsonic AIO Parameters
+    extraEgress: []
+    # -- Pod selector labels for ingress rules
+    # @section -- Jsonic AIO Parameters
+    ingressPodMatchLabels: {}
+    # -- Namespace selector labels for ingress rules
+    # @section -- Jsonic AIO Parameters
+    ingressNSMatchLabels: {}
+    # -- Namespace pod selector labels for ingress rules
+    # @section -- Jsonic AIO Parameters
+    ingressNSPodMatchLabels: {}
+
+  ingress:
+    # -- Enable ingress for Jsonic
+    # @section -- Jsonic AIO Parameters
+    enabled: false
+    # -- Ingress class name
+    # @section -- Jsonic AIO Parameters
+    ingressClassName: ""
+    # -- Ingress hostname
+    # @section -- Jsonic AIO Parameters
+    hostname: jsonic.local
+    # -- Ingress path
+    # @section -- Jsonic AIO Parameters
+    path: /
+    # -- Ingress path type
+    # @section -- Jsonic AIO Parameters
+    pathType: ImplementationSpecific
+    # -- Ingress API version
+    # @section -- Jsonic AIO Parameters
+    apiVersion: ""
+    # -- Ingress annotations
+    # @section -- Jsonic AIO Parameters
+    annotations: {}
+    # -- Enable TLS for ingress
+    # @section -- Jsonic AIO Parameters
+    tls: false
+    # -- Create self-signed TLS certificates
+    # @section -- Jsonic AIO Parameters
+    selfSigned: false
+    # -- Extra hostnames for ingress
+    # @section -- Jsonic AIO Parameters
+    extraHosts: []
+    # -- Extra paths for ingress
+    # @section -- Jsonic AIO Parameters
+    extraPaths: []
+    # -- Extra TLS configurations for ingress
+    # @section -- Jsonic AIO Parameters
+    extraTls: []
+    # -- TLS secrets for ingress
+    # @section -- Jsonic AIO Parameters
+    secrets: []
+    # -- Extra ingress rules
+    # @section -- Jsonic AIO Parameters
+    extraRules: []
+
+  persistence:
+    # -- Enable persistent storage for Jsonic
+    # @section -- Jsonic AIO Parameters
+    enabled: false
+    # -- Storage class for persistent volume
+    # @section -- Jsonic AIO Parameters
+    storageClass: ""
+    # -- Access modes for persistent volume
+    # @section -- Jsonic AIO Parameters
+    accessModes:
+      - ReadWriteOnce
+    # -- Size of persistent volume
+    # @section -- Jsonic AIO Parameters
+    size: 8Gi
+    # -- Mount path for persistent volume
+    # @section -- Jsonic AIO Parameters
+    mountPath: /jsonic/data
+    # -- Subpath within persistent volume
+    # @section -- Jsonic AIO Parameters
+    subPath: ""
+    # -- Annotations for persistent volume claim
+    # @section -- Jsonic AIO Parameters
+    annotations: {}
+    # -- Data source for persistent volume
+    # @section -- Jsonic AIO Parameters
+    dataSource: {}
+    # -- Use existing persistent volume claim
+    # @section -- Jsonic AIO Parameters
+    existingClaim: ""
+    # -- Selector for persistent volume
+    # @section -- Jsonic AIO Parameters
+    selector: {}
+
+  metrics:
+    # -- Enable metrics collection for Jsonic
+    # @section -- Jsonic AIO Parameters
+    enabled: false
+    serviceMonitor:
+      # -- Enable ServiceMonitor for Prometheus monitoring
+      # @section -- Jsonic AIO Parameters
+      enabled: false
+      # -- Namespace for ServiceMonitor (defaults to release namespace)
+      # @section -- Jsonic AIO Parameters
+      namespace: ""
+      # -- ServiceMonitor annotations
+      # @section -- Jsonic AIO Parameters
+      annotations: {}
+      # -- ServiceMonitor labels
+      # @section -- Jsonic AIO Parameters
+      labels: {}
+      # -- ServiceMonitor job label
+      # @section -- Jsonic AIO Parameters
+      jobLabel: ""
+      # -- Honor labels from target
+      # @section -- Jsonic AIO Parameters
+      honorLabels: false
+      # -- ServiceMonitor scrape interval
+      # @section -- Jsonic AIO Parameters
+      interval: ""
+      # -- ServiceMonitor scrape timeout
+      # @section -- Jsonic AIO Parameters
+      scrapeTimeout: ""
+      # -- ServiceMonitor TLS configuration
+      # @section -- Jsonic AIO Parameters
+      tlsConfig: {}
+      # -- ServiceMonitor metrics relabelings
+      # @section -- Jsonic AIO Parameters
+      metricsRelabelings: []
+      # -- ServiceMonitor relabelings
+      # @section -- Jsonic AIO Parameters
+      relabelings: []
+      # -- ServiceMonitor selector
+      # @section -- Jsonic AIO Parameters
+      selector: {}
+
+# @section -- Jsonic Frontend Parameters
+
+frontend:
+  image:
+    # -- Jsonic image repository
+    # @section -- Jsonic Frontend Parameters
+    repository: jsonic-co/jsonic-co-frontend
+    # -- Jsonic image pull policy
+    # @section -- Jsonic Frontend Parameters
+    pullPolicy: IfNotPresent
+    # -- Jsonic image tag
+    # @section -- Jsonic Frontend Parameters
+    tag: ""
+
+  # -- Number of Jsonic replicas
+  # @section -- Jsonic Frontend Parameters
+  replicaCount: 1
+
+  containerPorts:
+    # -- Jsonic HTTP container port
+    # @section -- Jsonic Frontend Parameters
+    http: 80
+    # -- Jsonic HTTPS container port
+    # @section -- Jsonic Frontend Parameters
+    https: 443
+
+  readinessProbe:
+    # -- Enable readiness probe
+    # @section -- Jsonic Frontend Parameters
+    enabled: true
+    # -- Initial delay seconds for readiness probe
+    # @section -- Jsonic Frontend Parameters
+    initialDelaySeconds: 0
+    # -- Period seconds for readiness probe
+    # @section -- Jsonic Frontend Parameters
+    periodSeconds: 10
+    # -- Timeout seconds for readiness probe
+    # @section -- Jsonic Frontend Parameters
+    timeoutSeconds: 1
+    # -- Failure threshold for readiness probe
+    # @section -- Jsonic Frontend Parameters
+    failureThreshold: 3
+    # -- Success threshold for readiness probe
+    # @section -- Jsonic Frontend Parameters
+    successThreshold: 1
+
+  # -- Custom liveness probe that overrides the default one
+  # @section -- Jsonic Frontend Parameters
+  customLivenessProbe: {}
+
+  # -- Custom readiness probe that overrides the default one
+  # @section -- Jsonic Frontend Parameters
+  customReadinessProbe: {}
+
+  # -- Custom startup probe that overrides the default one
+  # @section -- Jsonic Frontend Parameters
+  customStartupProbe: {}
+
+  # -- Array of extra environment variables to be added to Jsonic containers
+  # @section -- Jsonic Frontend Parameters
+  extraEnvVars: []
+  # -- Name of existing ConfigMap containing extra environment variables
+  # @section -- Jsonic Frontend Parameters
+  extraEnvVarsCM: ""
+  # -- Name of existing Secret containing extra environment variables
+  # @section -- Jsonic Frontend Parameters
+  extraEnvVarsSecret: ""
+
+  # -- Set container resources according to one common preset (allowed values: nano, small, medium, large, xlarge, 2xlarge)
+  # @section -- Jsonic Frontend Parameters
+  resourcesPreset: "nano"
+  # -- Set container resources for Jsonic (overrides resourcesPreset)
+  # @section -- Jsonic Frontend Parameters
+  resources: {}
+
+  # -- Annotations to add to Jsonic pods
+  # @section -- Jsonic Frontend Parameters
+  podAnnotations: {}
+  # -- Labels to add to Jsonic pods
+  # @section -- Jsonic Frontend Parameters
+  podLabels: {}
+
+  # -- Security context for Jsonic pods
+  # @section -- Jsonic Frontend Parameters
+  podSecurityContext: {}
+  # -- Security context for Jsonic containers
+  # @section -- Jsonic Frontend Parameters
+  securityContext: {}
+
+  updateStrategy:
+    # -- Deployment update strategy type (RollingUpdate or Recreate)
+    # @section -- Jsonic Frontend Parameters
+    type: RollingUpdate
+
+  pdb:
+    # -- Create PodDisruptionBudget for Jsonic deployment
+    # @section -- Jsonic Frontend Parameters
+    create: false
+    # -- Minimum number of available pods during disruptions
+    # @section -- Jsonic Frontend Parameters
+    minAvailable: ""
+    # -- Maximum number of unavailable pods during disruptions
+    # @section -- Jsonic Frontend Parameters
+    maxUnavailable: ""
+
+  autoscaling:
+    # -- Enable autoscaling for Jsonic deployment
+    # @section -- Jsonic Frontend Parameters
+    enabled: false
+    # -- Minimum number of Jsonic replicas
+    # @section -- Jsonic Frontend Parameters
+    minReplicas: 1
+    # -- Maximum number of Jsonic replicas
+    # @section -- Jsonic Frontend Parameters
+    maxReplicas: 100
+    # -- Target CPU utilization percentage for autoscaling
+    # @section -- Jsonic Frontend Parameters
+    targetCPUUtilizationPercentage: 80
+    # -- Target memory utilization percentage for autoscaling
+    # @section -- Jsonic Frontend Parameters
+    targetMemoryUtilizationPercentage: 80
+
+  # -- Node labels for Jsonic pods assignment
+  # @section -- Jsonic Frontend Parameters
+  nodeSelector: {}
+
+  # -- Tolerations for Jsonic pods assignment
+  # @section -- Jsonic Frontend Parameters
+  tolerations: []
+
+  # -- Affinity for Jsonic pods assignment
+  # @section -- Jsonic Frontend Parameters
+  affinity: {}
+
+  # -- Topology spread constraints for Jsonic pods assignment
+  # @section -- Jsonic Frontend Parameters
+  topologySpreadConstraints: []
+
+  # -- Extra volumes to add to Jsonic deployment
+  # @section -- Jsonic Frontend Parameters
+  volumes: []
+
+  # -- Extra volume mounts to add to Jsonic containers
+  # @section -- Jsonic Frontend Parameters
+  volumeMounts: []
+
+  service:
+    # -- Kubernetes service type
+    # @section -- Jsonic Frontend Parameters
+    type: ClusterIP
+    ports:
+      # -- Service HTTP port
+      # @section -- Jsonic Frontend Parameters
+      http: 80
+      # -- Service HTTPS port
+      # @section -- Jsonic Frontend Parameters
+      https: 443
+    # -- Static cluster IP address (optional)
+    # @section -- Jsonic Frontend Parameters
+    clusterIP: ""
+    nodePorts:
+      # -- NodePort for HTTP (when service type is NodePort)
+      # @section -- Jsonic Frontend Parameters
+      http: ""
+      # -- NodePort for HTTPS (when service type is NodePort)
+      # @section -- Jsonic Frontend Parameters
+      https: ""
+    # -- Load balancer IP address (when service type is LoadBalancer)
+    # @section -- Jsonic Frontend Parameters
+    loadBalancerIP: ""
+    # -- Load balancer source IP ranges (when service type is LoadBalancer)
+    # @section -- Jsonic Frontend Parameters
+    loadBalancerSourceRanges: []
+    # -- External traffic policy (Cluster or Local)
+    # @section -- Jsonic Frontend Parameters
+    externalTrafficPolicy: Cluster
+    # -- Service annotations
+    # @section -- Jsonic Frontend Parameters
+    annotations: {}
+    # -- Session affinity (None or ClientIP)
+    # @section -- Jsonic Frontend Parameters
+    sessionAffinity: None
+    # -- Session affinity configuration
+    # @section -- Jsonic Frontend Parameters
+    sessionAffinityConfig: {}
+    # -- Extra service ports
+    # @section -- Jsonic Frontend Parameters
+    extraPorts: []
+
+  networkPolicy:
+    # -- Enable NetworkPolicy for Jsonic pods
+    # @section -- Jsonic Frontend Parameters
+    enabled: false
+    # -- Allow external traffic to Jsonic pods
+    # @section -- Jsonic Frontend Parameters
+    allowExternal: true
+    # -- Allow external egress traffic from Jsonic pods
+    # @section -- Jsonic Frontend Parameters
+    allowExternalEgress: true
+    # -- Add external client access to NetworkPolicy
+    # @section -- Jsonic Frontend Parameters
+    addExternalClientAccess: true
+    # -- Extra ingress rules for NetworkPolicy
+    # @section -- Jsonic Frontend Parameters
+    extraIngress: []
+    # -- Extra egress rules for NetworkPolicy
+    # @section -- Jsonic Frontend Parameters
+    extraEgress: []
+    # -- Pod selector labels for ingress rules
+    # @section -- Jsonic Frontend Parameters
+    ingressPodMatchLabels: {}
+    # -- Namespace selector labels for ingress rules
+    # @section -- Jsonic Frontend Parameters
+    ingressNSMatchLabels: {}
+    # -- Namespace pod selector labels for ingress rules
+    # @section -- Jsonic Frontend Parameters
+    ingressNSPodMatchLabels: {}
+
+  ingress:
+    # -- Enable ingress for Jsonic
+    # @section -- Jsonic Frontend Parameters
+    enabled: false
+    # -- Ingress class name
+    # @section -- Jsonic Frontend Parameters
+    ingressClassName: ""
+    # -- Ingress hostname
+    # @section -- Jsonic Frontend Parameters
+    hostname: jsonic-frontend.local
+    # -- Ingress path
+    # @section -- Jsonic Frontend Parameters
+    path: /
+    # -- Ingress path type
+    # @section -- Jsonic Frontend Parameters
+    pathType: ImplementationSpecific
+    # -- Ingress API version
+    # @section -- Jsonic Frontend Parameters
+    apiVersion: ""
+    # -- Ingress annotations
+    # @section -- Jsonic Frontend Parameters
+    annotations: {}
+    # -- Enable TLS for ingress
+    # @section -- Jsonic Frontend Parameters
+    tls: false
+    # -- Create self-signed TLS certificates
+    # @section -- Jsonic Frontend Parameters
+    selfSigned: false
+    # -- Extra hostnames for ingress
+    # @section -- Jsonic Frontend Parameters
+    extraHosts: []
+    # -- Extra paths for ingress
+    # @section -- Jsonic Frontend Parameters
+    extraPaths: []
+    # -- Extra TLS configurations for ingress
+    # @section -- Jsonic Frontend Parameters
+    extraTls: []
+    # -- TLS secrets for ingress
+    # @section -- Jsonic Frontend Parameters
+    secrets: []
+    # -- Extra ingress rules
+    # @section -- Jsonic Frontend Parameters
+    extraRules: []
+
+  persistence:
+    # -- Enable persistent storage for Jsonic
+    # @section -- Jsonic Frontend Parameters
+    enabled: false
+    # -- Storage class for persistent volume
+    # @section -- Jsonic Frontend Parameters
+    storageClass: ""
+    # -- Access modes for persistent volume
+    # @section -- Jsonic Frontend Parameters
+    accessModes:
+      - ReadWriteOnce
+    # -- Size of persistent volume
+    # @section -- Jsonic Frontend Parameters
+    size: 8Gi
+    # -- Mount path for persistent volume
+    # @section -- Jsonic Frontend Parameters
+    mountPath: /jsonic/data
+    # -- Subpath within persistent volume
+    # @section -- Jsonic Frontend Parameters
+    subPath: ""
+    # -- Annotations for persistent volume claim
+    # @section -- Jsonic Frontend Parameters
+    annotations: {}
+    # -- Data source for persistent volume
+    # @section -- Jsonic Frontend Parameters
+    dataSource: {}
+    # -- Use existing persistent volume claim
+    # @section -- Jsonic Frontend Parameters
+    existingClaim: ""
+    # -- Selector for persistent volume
+    # @section -- Jsonic Frontend Parameters
+    selector: {}
+
+  metrics:
+    # -- Enable metrics collection for Jsonic
+    # @section -- Jsonic Frontend Parameters
+    enabled: false
+    serviceMonitor:
+      # -- Enable ServiceMonitor for Prometheus monitoring
+      # @section -- Jsonic Frontend Parameters
+      enabled: false
+      # -- Namespace for ServiceMonitor (defaults to release namespace)
+      # @section -- Jsonic Frontend Parameters
+      namespace: ""
+      # -- ServiceMonitor annotations
+      # @section -- Jsonic Frontend Parameters
+      annotations: {}
+      # -- ServiceMonitor labels
+      # @section -- Jsonic Frontend Parameters
+      labels: {}
+      # -- ServiceMonitor job label
+      # @section -- Jsonic Frontend Parameters
+      jobLabel: ""
+      # -- Honor labels from target
+      # @section -- Jsonic Frontend Parameters
+      honorLabels: false
+      # -- ServiceMonitor scrape interval
+      # @section -- Jsonic Frontend Parameters
+      interval: ""
+      # -- ServiceMonitor scrape timeout
+      # @section -- Jsonic Frontend Parameters
+      scrapeTimeout: ""
+      # -- ServiceMonitor TLS configuration
+      # @section -- Jsonic Frontend Parameters
+      tlsConfig: {}
+      # -- ServiceMonitor metrics relabelings
+      # @section -- Jsonic Frontend Parameters
+      metricsRelabelings: []
+      # -- ServiceMonitor relabelings
+      # @section -- Jsonic Frontend Parameters
+      relabelings: []
+      # -- ServiceMonitor selector
+      # @section -- Jsonic Frontend Parameters
+      selector: {}
+
+# @section -- Jsonic Backend Parameters
+
+backend:
+  image:
+    # -- Jsonic image repository
+    # @section -- Jsonic Backend Parameters
+    repository: jsonic-co/jsonic-co-backend
+    # -- Jsonic image pull policy
+    # @section -- Jsonic Backend Parameters
+    pullPolicy: IfNotPresent
+    # -- Jsonic image tag
+    # @section -- Jsonic Backend Parameters
+    tag: ""
+
+  # -- Number of Jsonic replicas
+  # @section -- Jsonic Backend Parameters
+  replicaCount: 1
+
+  containerPorts:
+    # -- Jsonic HTTP container port
+    # @section -- Jsonic Backend Parameters
+    http: 80
+    # -- Jsonic HTTPS container port
+    # @section -- Jsonic Backend Parameters
+    https: 443
+
+  readinessProbe:
+    # -- Enable readiness probe
+    # @section -- Jsonic Backend Parameters
+    enabled: true
+    # -- Initial delay seconds for readiness probe
+    # @section -- Jsonic Backend Parameters
+    initialDelaySeconds: 0
+    # -- Period seconds for readiness probe
+    # @section -- Jsonic Backend Parameters
+    periodSeconds: 10
+    # -- Timeout seconds for readiness probe
+    # @section -- Jsonic Backend Parameters
+    timeoutSeconds: 1
+    # -- Failure threshold for readiness probe
+    # @section -- Jsonic Backend Parameters
+    failureThreshold: 3
+    # -- Success threshold for readiness probe
+    # @section -- Jsonic Backend Parameters
+    successThreshold: 1
+
+  # -- Custom liveness probe that overrides the default one
+  # @section -- Jsonic Backend Parameters
+  customLivenessProbe: {}
+
+  # -- Custom readiness probe that overrides the default one
+  # @section -- Jsonic Backend Parameters
+  customReadinessProbe: {}
+
+  # -- Custom startup probe that overrides the default one
+  # @section -- Jsonic Backend Parameters
+  customStartupProbe: {}
+
+  # -- Array of extra environment variables to be added to Jsonic containers
+  # @section -- Jsonic Backend Parameters
+  extraEnvVars: []
+  # -- Name of existing ConfigMap containing extra environment variables
+  # @section -- Jsonic Backend Parameters
+  extraEnvVarsCM: ""
+  # -- Name of existing Secret containing extra environment variables
+  # @section -- Jsonic Backend Parameters
+  extraEnvVarsSecret: ""
+
+  # -- Set container resources according to one common preset (allowed values: nano, small, medium, large, xlarge, 2xlarge)
+  # @section -- Jsonic Backend Parameters
+  resourcesPreset: "nano"
+  # -- Set container resources for Jsonic (overrides resourcesPreset)
+  # @section -- Jsonic Backend Parameters
+  resources: {}
+
+  # -- Annotations to add to Jsonic pods
+  # @section -- Jsonic Backend Parameters
+  podAnnotations: {}
+  # -- Labels to add to Jsonic pods
+  # @section -- Jsonic Backend Parameters
+  podLabels: {}
+
+  # -- Security context for Jsonic pods
+  # @section -- Jsonic Backend Parameters
+  podSecurityContext: {}
+  # -- Security context for Jsonic containers
+  # @section -- Jsonic Backend Parameters
+  securityContext: {}
+
+  updateStrategy:
+    # -- Deployment update strategy type (RollingUpdate or Recreate)
+    # @section -- Jsonic Backend Parameters
+    type: RollingUpdate
+
+  pdb:
+    # -- Create PodDisruptionBudget for Jsonic deployment
+    # @section -- Jsonic Backend Parameters
+    create: false
+    # -- Minimum number of available pods during disruptions
+    # @section -- Jsonic Backend Parameters
+    minAvailable: ""
+    # -- Maximum number of unavailable pods during disruptions
+    # @section -- Jsonic Backend Parameters
+    maxUnavailable: ""
+
+  autoscaling:
+    # -- Enable autoscaling for Jsonic deployment
+    # @section -- Jsonic Backend Parameters
+    enabled: false
+    # -- Minimum number of Jsonic replicas
+    # @section -- Jsonic Backend Parameters
+    minReplicas: 1
+    # -- Maximum number of Jsonic replicas
+    # @section -- Jsonic Backend Parameters
+    maxReplicas: 100
+    # -- Target CPU utilization percentage for autoscaling
+    # @section -- Jsonic Backend Parameters
+    targetCPUUtilizationPercentage: 80
+    # -- Target memory utilization percentage for autoscaling
+    # @section -- Jsonic Backend Parameters
+    targetMemoryUtilizationPercentage: 80
+
+  # -- Node labels for Jsonic pods assignment
+  # @section -- Jsonic Backend Parameters
+  nodeSelector: {}
+
+  # -- Tolerations for Jsonic pods assignment
+  # @section -- Jsonic Backend Parameters
+  tolerations: []
+
+  # -- Affinity for Jsonic pods assignment
+  # @section -- Jsonic Backend Parameters
+  affinity: {}
+
+  # -- Topology spread constraints for Jsonic pods assignment
+  # @section -- Jsonic Backend Parameters
+  topologySpreadConstraints: []
+
+  # -- Extra volumes to add to Jsonic deployment
+  # @section -- Jsonic Backend Parameters
+  volumes: []
+
+  # -- Extra volume mounts to add to Jsonic containers
+  # @section -- Jsonic Backend Parameters
+  volumeMounts: []
+
+  service:
+    # -- Kubernetes service type
+    # @section -- Jsonic Backend Parameters
+    type: ClusterIP
+    ports:
+      # -- Service HTTP port
+      # @section -- Jsonic Backend Parameters
+      http: 80
+      # -- Service HTTPS port
+      # @section -- Jsonic Backend Parameters
+      https: 443
+    # -- Static cluster IP address (optional)
+    # @section -- Jsonic Backend Parameters
+    clusterIP: ""
+    nodePorts:
+      # -- NodePort for HTTP (when service type is NodePort)
+      # @section -- Jsonic Backend Parameters
+      http: ""
+      # -- NodePort for HTTPS (when service type is NodePort)
+      # @section -- Jsonic Backend Parameters
+      https: ""
+    # -- Load balancer IP address (when service type is LoadBalancer)
+    # @section -- Jsonic Backend Parameters
+    loadBalancerIP: ""
+    # -- Load balancer source IP ranges (when service type is LoadBalancer)
+    # @section -- Jsonic Backend Parameters
+    loadBalancerSourceRanges: []
+    # -- External traffic policy (Cluster or Local)
+    # @section -- Jsonic Backend Parameters
+    externalTrafficPolicy: Cluster
+    # -- Service annotations
+    # @section -- Jsonic Backend Parameters
+    annotations: {}
+    # -- Session affinity (None or ClientIP)
+    # @section -- Jsonic Backend Parameters
+    sessionAffinity: None
+    # -- Session affinity configuration
+    # @section -- Jsonic Backend Parameters
+    sessionAffinityConfig: {}
+    # -- Extra service ports
+    # @section -- Jsonic Backend Parameters
+    extraPorts: []
+
+  networkPolicy:
+    # -- Enable NetworkPolicy for Jsonic pods
+    # @section -- Jsonic Backend Parameters
+    enabled: false
+    # -- Allow external traffic to Jsonic pods
+    # @section -- Jsonic Backend Parameters
+    allowExternal: true
+    # -- Allow external egress traffic from Jsonic pods
+    # @section -- Jsonic Backend Parameters
+    allowExternalEgress: true
+    # -- Add external client access to NetworkPolicy
+    # @section -- Jsonic Backend Parameters
+    addExternalClientAccess: true
+    # -- Extra ingress rules for NetworkPolicy
+    # @section -- Jsonic Backend Parameters
+    extraIngress: []
+    # -- Extra egress rules for NetworkPolicy
+    # @section -- Jsonic Backend Parameters
+    extraEgress: []
+    # -- Pod selector labels for ingress rules
+    # @section -- Jsonic Backend Parameters
+    ingressPodMatchLabels: {}
+    # -- Namespace selector labels for ingress rules
+    # @section -- Jsonic Backend Parameters
+    ingressNSMatchLabels: {}
+    # -- Namespace pod selector labels for ingress rules
+    # @section -- Jsonic Backend Parameters
+    ingressNSPodMatchLabels: {}
+
+  ingress:
+    # -- Enable ingress for Jsonic
+    # @section -- Jsonic Backend Parameters
+    enabled: false
+    # -- Ingress class name
+    # @section -- Jsonic Backend Parameters
+    ingressClassName: ""
+    # -- Ingress hostname
+    # @section -- Jsonic Backend Parameters
+    hostname: jsonic-frontend.local
+    # -- Ingress path
+    # @section -- Jsonic Backend Parameters
+    path: /
+    # -- Ingress path type
+    # @section -- Jsonic Backend Parameters
+    pathType: ImplementationSpecific
+    # -- Ingress API version
+    # @section -- Jsonic Backend Parameters
+    apiVersion: ""
+    # -- Ingress annotations
+    # @section -- Jsonic Backend Parameters
+    annotations: {}
+    # -- Enable TLS for ingress
+    # @section -- Jsonic Backend Parameters
+    tls: false
+    # -- Create self-signed TLS certificates
+    # @section -- Jsonic Backend Parameters
+    selfSigned: false
+    # -- Extra hostnames for ingress
+    # @section -- Jsonic Backend Parameters
+    extraHosts: []
+    # -- Extra paths for ingress
+    # @section -- Jsonic Backend Parameters
+    extraPaths: []
+    # -- Extra TLS configurations for ingress
+    # @section -- Jsonic Backend Parameters
+    extraTls: []
+    # -- TLS secrets for ingress
+    # @section -- Jsonic Backend Parameters
+    secrets: []
+    # -- Extra ingress rules
+    # @section -- Jsonic Backend Parameters
+    extraRules: []
+
+  persistence:
+    # -- Enable persistent storage for Jsonic
+    # @section -- Jsonic Backend Parameters
+    enabled: false
+    # -- Storage class for persistent volume
+    # @section -- Jsonic Backend Parameters
+    storageClass: ""
+    # -- Access modes for persistent volume
+    # @section -- Jsonic Backend Parameters
+    accessModes:
+      - ReadWriteOnce
+    # -- Size of persistent volume
+    # @section -- Jsonic Backend Parameters
+    size: 8Gi
+    # -- Mount path for persistent volume
+    # @section -- Jsonic Backend Parameters
+    mountPath: /jsonic/data
+    # -- Subpath within persistent volume
+    # @section -- Jsonic Backend Parameters
+    subPath: ""
+    # -- Annotations for persistent volume claim
+    # @section -- Jsonic Backend Parameters
+    annotations: {}
+    # -- Data source for persistent volume
+    # @section -- Jsonic Backend Parameters
+    dataSource: {}
+    # -- Use existing persistent volume claim
+    # @section -- Jsonic Backend Parameters
+    existingClaim: ""
+    # -- Selector for persistent volume
+    # @section -- Jsonic Backend Parameters
+    selector: {}
+
+  metrics:
+    # -- Enable metrics collection for Jsonic
+    # @section -- Jsonic Backend Parameters
+    enabled: false
+    serviceMonitor:
+      # -- Enable ServiceMonitor for Prometheus monitoring
+      # @section -- Jsonic Backend Parameters
+      enabled: false
+      # -- Namespace for ServiceMonitor (defaults to release namespace)
+      # @section -- Jsonic Backend Parameters
+      namespace: ""
+      # -- ServiceMonitor annotations
+      # @section -- Jsonic Backend Parameters
+      annotations: {}
+      # -- ServiceMonitor labels
+      # @section -- Jsonic Backend Parameters
+      labels: {}
+      # -- ServiceMonitor job label
+      # @section -- Jsonic Backend Parameters
+      jobLabel: ""
+      # -- Honor labels from target
+      # @section -- Jsonic Backend Parameters
+      honorLabels: false
+      # -- ServiceMonitor scrape interval
+      # @section -- Jsonic Backend Parameters
+      interval: ""
+      # -- ServiceMonitor scrape timeout
+      # @section -- Jsonic Backend Parameters
+      scrapeTimeout: ""
+      # -- ServiceMonitor TLS configuration
+      # @section -- Jsonic Backend Parameters
+      tlsConfig: {}
+      # -- ServiceMonitor metrics relabelings
+      # @section -- Jsonic Backend Parameters
+      metricsRelabelings: []
+      # -- ServiceMonitor relabelings
+      # @section -- Jsonic Backend Parameters
+      relabelings: []
+      # -- ServiceMonitor selector
+      # @section -- Jsonic Backend Parameters
+      selector: {}
+
+# @section -- Jsonic Admin Parameters
+
+admin:
+  image:
+    # -- Jsonic image repository
+    # @section -- Jsonic Admin Parameters
+    repository: jsonic-co/jsonic-co-admin
+    # -- Jsonic image pull policy
+    # @section -- Jsonic Admin Parameters
+    pullPolicy: IfNotPresent
+    # -- Jsonic image tag
+    # @section -- Jsonic Admin Parameters
+    tag: ""
+
+  # -- Number of Jsonic replicas
+  # @section -- Jsonic Admin Parameters
+  replicaCount: 1
+
+  containerPorts:
+    # -- Jsonic HTTP container port
+    # @section -- Jsonic Admin Parameters
+    http: 80
+    # -- Jsonic HTTPS container port
+    # @section -- Jsonic Admin Parameters
+    https: 443
+
+  readinessProbe:
+    # -- Enable readiness probe
+    # @section -- Jsonic Admin Parameters
+    enabled: true
+    # -- Initial delay seconds for readiness probe
+    # @section -- Jsonic Admin Parameters
+    initialDelaySeconds: 0
+    # -- Period seconds for readiness probe
+    # @section -- Jsonic Admin Parameters
+    periodSeconds: 10
+    # -- Timeout seconds for readiness probe
+    # @section -- Jsonic Admin Parameters
+    timeoutSeconds: 1
+    # -- Failure threshold for readiness probe
+    # @section -- Jsonic Admin Parameters
+    failureThreshold: 3
+    # -- Success threshold for readiness probe
+    # @section -- Jsonic Admin Parameters
+    successThreshold: 1
+
+  # -- Custom liveness probe that overrides the default one
+  # @section -- Jsonic Admin Parameters
+  customLivenessProbe: {}
+
+  # -- Custom readiness probe that overrides the default one
+  # @section -- Jsonic Admin Parameters
+  customReadinessProbe: {}
+
+  # -- Custom startup probe that overrides the default one
+  # @section -- Jsonic Admin Parameters
+  customStartupProbe: {}
+
+  # -- Array of extra environment variables to be added to Jsonic containers
+  # @section -- Jsonic Admin Parameters
+  extraEnvVars: []
+  # -- Name of existing ConfigMap containing extra environment variables
+  # @section -- Jsonic Admin Parameters
+  extraEnvVarsCM: ""
+  # -- Name of existing Secret containing extra environment variables
+  # @section -- Jsonic Admin Parameters
+  extraEnvVarsSecret: ""
+
+  # -- Set container resources according to one common preset (allowed values: nano, small, medium, large, xlarge, 2xlarge)
+  # @section -- Jsonic Admin Parameters
+  resourcesPreset: "nano"
+  # -- Set container resources for Jsonic (overrides resourcesPreset)
+  # @section -- Jsonic Admin Parameters
+  resources: {}
+
+  # -- Annotations to add to Jsonic pods
+  # @section -- Jsonic Admin Parameters
+  podAnnotations: {}
+  # -- Labels to add to Jsonic pods
+  # @section -- Jsonic Admin Parameters
+  podLabels: {}
+
+  # -- Security context for Jsonic pods
+  # @section -- Jsonic Admin Parameters
+  podSecurityContext: {}
+  # -- Security context for Jsonic containers
+  # @section -- Jsonic Admin Parameters
+  securityContext: {}
+
+  updateStrategy:
+    # -- Deployment update strategy type (RollingUpdate or Recreate)
+    # @section -- Jsonic Admin Parameters
+    type: RollingUpdate
+
+  pdb:
+    # -- Create PodDisruptionBudget for Jsonic deployment
+    # @section -- Jsonic Admin Parameters
+    create: false
+    # -- Minimum number of available pods during disruptions
+    # @section -- Jsonic Admin Parameters
+    minAvailable: ""
+    # -- Maximum number of unavailable pods during disruptions
+    # @section -- Jsonic Admin Parameters
+    maxUnavailable: ""
+
+  autoscaling:
+    # -- Enable autoscaling for Jsonic deployment
+    # @section -- Jsonic Admin Parameters
+    enabled: false
+    # -- Minimum number of Jsonic replicas
+    # @section -- Jsonic Admin Parameters
+    minReplicas: 1
+    # -- Maximum number of Jsonic replicas
+    # @section -- Jsonic Admin Parameters
+    maxReplicas: 100
+    # -- Target CPU utilization percentage for autoscaling
+    # @section -- Jsonic Admin Parameters
+    targetCPUUtilizationPercentage: 80
+    # -- Target memory utilization percentage for autoscaling
+    # @section -- Jsonic Admin Parameters
+    targetMemoryUtilizationPercentage: 80
+
+  # -- Node labels for Jsonic pods assignment
+  # @section -- Jsonic Admin Parameters
+  nodeSelector: {}
+
+  # -- Tolerations for Jsonic pods assignment
+  # @section -- Jsonic Admin Parameters
+  tolerations: []
+
+  # -- Affinity for Jsonic pods assignment
+  # @section -- Jsonic Admin Parameters
+  affinity: {}
+
+  # -- Topology spread constraints for Jsonic pods assignment
+  # @section -- Jsonic Admin Parameters
+  topologySpreadConstraints: []
+
+  # -- Extra volumes to add to Jsonic deployment
+  # @section -- Jsonic Admin Parameters
+  volumes: []
+
+  # -- Extra volume mounts to add to Jsonic containers
+  # @section -- Jsonic Admin Parameters
+  volumeMounts: []
+
+  service:
+    # -- Kubernetes service type
+    # @section -- Jsonic Admin Parameters
+    type: ClusterIP
+    ports:
+      # -- Service HTTP port
+      # @section -- Jsonic Admin Parameters
+      http: 80
+      # -- Service HTTPS port
+      # @section -- Jsonic Admin Parameters
+      https: 443
+    # -- Static cluster IP address (optional)
+    # @section -- Jsonic Admin Parameters
+    clusterIP: ""
+    nodePorts:
+      # -- NodePort for HTTP (when service type is NodePort)
+      # @section -- Jsonic Admin Parameters
+      http: ""
+      # -- NodePort for HTTPS (when service type is NodePort)
+      # @section -- Jsonic Admin Parameters
+      https: ""
+    # -- Load balancer IP address (when service type is LoadBalancer)
+    # @section -- Jsonic Admin Parameters
+    loadBalancerIP: ""
+    # -- Load balancer source IP ranges (when service type is LoadBalancer)
+    # @section -- Jsonic Admin Parameters
+    loadBalancerSourceRanges: []
+    # -- External traffic policy (Cluster or Local)
+    # @section -- Jsonic Admin Parameters
+    externalTrafficPolicy: Cluster
+    # -- Service annotations
+    # @section -- Jsonic Admin Parameters
+    annotations: {}
+    # -- Session affinity (None or ClientIP)
+    # @section -- Jsonic Admin Parameters
+    sessionAffinity: None
+    # -- Session affinity configuration
+    # @section -- Jsonic Admin Parameters
+    sessionAffinityConfig: {}
+    # -- Extra service ports
+    # @section -- Jsonic Admin Parameters
+    extraPorts: []
+
+  networkPolicy:
+    # -- Enable NetworkPolicy for Jsonic pods
+    # @section -- Jsonic Admin Parameters
+    enabled: false
+    # -- Allow external traffic to Jsonic pods
+    # @section -- Jsonic Admin Parameters
+    allowExternal: true
+    # -- Allow external egress traffic from Jsonic pods
+    # @section -- Jsonic Admin Parameters
+    allowExternalEgress: true
+    # -- Add external client access to NetworkPolicy
+    # @section -- Jsonic Admin Parameters
+    addExternalClientAccess: true
+    # -- Extra ingress rules for NetworkPolicy
+    # @section -- Jsonic Admin Parameters
+    extraIngress: []
+    # -- Extra egress rules for NetworkPolicy
+    # @section -- Jsonic Admin Parameters
+    extraEgress: []
+    # -- Pod selector labels for ingress rules
+    # @section -- Jsonic Admin Parameters
+    ingressPodMatchLabels: {}
+    # -- Namespace selector labels for ingress rules
+    # @section -- Jsonic Admin Parameters
+    ingressNSMatchLabels: {}
+    # -- Namespace pod selector labels for ingress rules
+    # @section -- Jsonic Admin Parameters
+    ingressNSPodMatchLabels: {}
+
+  ingress:
+    # -- Enable ingress for Jsonic
+    # @section -- Jsonic Admin Parameters
+    enabled: false
+    # -- Ingress class name
+    # @section -- Jsonic Admin Parameters
+    ingressClassName: ""
+    # -- Ingress hostname
+    # @section -- Jsonic Admin Parameters
+    hostname: jsonic-admin.local
+    # -- Ingress path
+    # @section -- Jsonic Admin Parameters
+    path: /
+    # -- Ingress path type
+    # @section -- Jsonic Admin Parameters
+    pathType: ImplementationSpecific
+    # -- Ingress API version
+    # @section -- Jsonic Admin Parameters
+    apiVersion: ""
+    # -- Ingress annotations
+    # @section -- Jsonic Admin Parameters
+    annotations: {}
+    # -- Enable TLS for ingress
+    # @section -- Jsonic Admin Parameters
+    tls: false
+    # -- Create self-signed TLS certificates
+    # @section -- Jsonic Admin Parameters
+    selfSigned: false
+    # -- Extra hostnames for ingress
+    # @section -- Jsonic Admin Parameters
+    extraHosts: []
+    # -- Extra paths for ingress
+    # @section -- Jsonic Admin Parameters
+    extraPaths: []
+    # -- Extra TLS configurations for ingress
+    # @section -- Jsonic Admin Parameters
+    extraTls: []
+    # -- TLS secrets for ingress
+    # @section -- Jsonic Admin Parameters
+    secrets: []
+    # -- Extra ingress rules
+    # @section -- Jsonic Admin Parameters
+    extraRules: []
+
+  persistence:
+    # -- Enable persistent storage for Jsonic
+    # @section -- Jsonic Admin Parameters
+    enabled: false
+    # -- Storage class for persistent volume
+    # @section -- Jsonic Admin Parameters
+    storageClass: ""
+    # -- Access modes for persistent volume
+    # @section -- Jsonic Admin Parameters
+    accessModes:
+      - ReadWriteOnce
+    # -- Size of persistent volume
+    # @section -- Jsonic Admin Parameters
+    size: 8Gi
+    # -- Mount path for persistent volume
+    # @section -- Jsonic Admin Parameters
+    mountPath: /jsonic/data
+    # -- Subpath within persistent volume
+    # @section -- Jsonic Admin Parameters
+    subPath: ""
+    # -- Annotations for persistent volume claim
+    # @section -- Jsonic Admin Parameters
+    annotations: {}
+    # -- Data source for persistent volume
+    # @section -- Jsonic Admin Parameters
+    dataSource: {}
+    # -- Use existing persistent volume claim
+    # @section -- Jsonic Admin Parameters
+    existingClaim: ""
+    # -- Selector for persistent volume
+    # @section -- Jsonic Admin Parameters
+    selector: {}
+
+  metrics:
+    # -- Enable metrics collection for Jsonic
+    # @section -- Jsonic Admin Parameters
+    enabled: false
+    serviceMonitor:
+      # -- Enable ServiceMonitor for Prometheus monitoring
+      # @section -- Jsonic Admin Parameters
+      enabled: false
+      # -- Namespace for ServiceMonitor (defaults to release namespace)
+      # @section -- Jsonic Admin Parameters
+      namespace: ""
+      # -- ServiceMonitor annotations
+      # @section -- Jsonic Admin Parameters
+      annotations: {}
+      # -- ServiceMonitor labels
+      # @section -- Jsonic Admin Parameters
+      labels: {}
+      # -- ServiceMonitor job label
+      # @section -- Jsonic Admin Parameters
+      jobLabel: ""
+      # -- Honor labels from target
+      # @section -- Jsonic Admin Parameters
+      honorLabels: false
+      # -- ServiceMonitor scrape interval
+      # @section -- Jsonic Admin Parameters
+      interval: ""
+      # -- ServiceMonitor scrape timeout
+      # @section -- Jsonic Admin Parameters
+      scrapeTimeout: ""
+      # -- ServiceMonitor TLS configuration
+      # @section -- Jsonic Admin Parameters
+      tlsConfig: {}
+      # -- ServiceMonitor metrics relabelings
+      # @section -- Jsonic Admin Parameters
+      metricsRelabelings: []
+      # -- ServiceMonitor relabelings
+      # @section -- Jsonic Admin Parameters
+      relabelings: []
+      # -- ServiceMonitor selector
+      # @section -- Jsonic Admin Parameters
+      selector: {}
+
+# @section -- Jsonic Migrations Parameters
+
+migrations:
+  # -- Enable database migrations job
+  # @section -- Jsonic Migrations Parameters
+  enabled: true
+
+  # -- Array of extra environment variables to be added to Jsonic containers
+  # @section -- Jsonic Migrations Parameters
+  extraEnvVars: []
+  # -- Name of existing ConfigMap containing extra environment variables
+  # @section -- Jsonic Migrations Parameters
+  extraEnvVarsCM: ""
+  # -- Name of existing Secret containing extra environment variables
+  # @section -- Jsonic Migrations Parameters
+  extraEnvVarsSecret: ""
+
+  # -- Set container resources according to one common preset (allowed values: nano, small, medium, large, xlarge, 2xlarge)
+  # @section -- Jsonic Migrations Parameters
+  resourcesPreset: "nano"
+  # -- Set container resources for Jsonic (overrides resourcesPreset)
+  # @section -- Jsonic Migrations Parameters
+  resources: {}
+
+# @section -- Default Init Containers Parameters
+
+defaultInitContainers:
+  waitForDatabase:
+    # -- Enable init container that waits for database to be ready
+    # @section -- Default Init Containers Parameters
+    enabled: true
+
+  waitForMigrations:
+    # -- Enable init container that waits for migrations to complete
+    # @section -- Default Init Containers Parameters
+    enabled: true
+
+# @section -- Other Parameters
+
+serviceAccount:
+  # -- Create service account for Jsonic
+  # @section -- Other Parameters
+  create: false
+  # -- Service account name (auto-generated if not specified)
+  # @section -- Other Parameters
+  name: ""
+  # -- Service account annotations
+  # @section -- Other Parameters
+  annotations: {}
+  # -- Auto-mount service account token
+  # @section -- Other Parameters
+  automountServiceAccountToken: true
+
+rbac:
+  # -- Create RBAC resources for Jsonic
+  # @section -- Other Parameters
+  create: false
+  # -- RBAC rules for Jsonic
+  # @section -- Other Parameters
+  rules: []
+
+# @section -- Database Parameters
+
+postgresql:
+  # -- Enable PostgreSQL subchart
+  # @section -- Database Parameters
+  enabled: false
+  auth:
+    # -- Enable PostgreSQL default postgres user
+    # @section -- Database Parameters
+    enablePostgresUser: true
+    # -- PostgreSQL application username
+    # @section -- Database Parameters
+    username: ""
+    # -- PostgreSQL application password
+    # @section -- Database Parameters
+    password: ""
+    # -- PostgreSQL application database name
+    # @section -- Database Parameters
+    database: ""
+    # -- Existing secret containing PostgreSQL credentials
+    # @section -- Database Parameters
+    existingSecret: ""
+  # -- PostgreSQL architecture (standalone or replication)
+  # @section -- Database Parameters
+  architecture: standalone
+  primary:
+    # -- PostgreSQL primary resource preset
+    # @section -- Database Parameters
+    resourcesPreset: "nano"
+    # -- PostgreSQL primary resource limits/requests
+    # @section -- Database Parameters
+    resources: {}
+
+externalDatabase:
+  # -- External PostgreSQL host
+  # @section -- Database Parameters
+  host: ""
+  # -- External PostgreSQL port
+  # @section -- Database Parameters
+  port: 5432
+  # -- External PostgreSQL username
+  # @section -- Database Parameters
+  user: ""
+  # -- External PostgreSQL database name
+  # @section -- Database Parameters
+  database: ""
+  # -- External PostgreSQL password
+  # @section -- Database Parameters
+  password: ""
+  # -- External PostgreSQL full connection string (overrides other settings)
+  # @section -- Database Parameters
+  sqlConnection: ""
+  # -- Existing secret containing external PostgreSQL credentials
+  # @section -- Database Parameters
+  existingSecret: ""
+  # -- Key in existing secret containing password
+  # @section -- Database Parameters
+  existingSecretPasswordKey: ""
+  # -- Key in existing secret containing SQL connection string
+  # @section -- Database Parameters
+  existingSecretSqlConnectionKey: ""
+
+# @section -- Redis Parameters
+
+redis:
+  # -- Enable Redis subchart
+  # @section -- Redis Parameters
+  enabled: false
+  auth:
+    # -- Enable Redis authentication
+    # @section -- Redis Parameters
+    enabled: true
+    # -- Redis password
+    # @section -- Redis Parameters
+    password: ""
+    # -- Existing secret containing Redis credentials
+    # @section -- Redis Parameters
+    existingSecret: ""
+  # -- Redis architecture (standalone or replication)
+  # @section -- Redis Parameters
+  architecture: standalone
+  master:
+    # -- Redis master resource preset
+    # @section -- Redis Parameters
+    resourcesPreset: "nano"
+    # -- Redis master resource limits/requests
+    # @section -- Redis Parameters
+    resources: {}
+
+externalRedis:
+  # -- External Redis host
+  # @section -- Redis Parameters
+  host: ""
+  # -- External Redis port
+  # @section -- Redis Parameters
+  port: 6379
+  # -- External Redis password
+  # @section -- Redis Parameters
+  password: ""
+  # -- Existing secret containing external Redis credentials
+  # @section -- Redis Parameters
+  existingSecret: ""
+  # -- Key in existing secret containing password
+  # @section -- Redis Parameters
+  existingSecretPasswordKey: ""
+
+## ClickHouse Parameters
+
+clickhouse:
+  # -- Enable ClickHouse subchart
+  # @section -- ClickHouse Parameters
+  enabled: false
+  auth:
+    # -- ClickHouse username
+    # @section -- ClickHouse Parameters
+    username: ""
+    # -- ClickHouse password
+    # @section -- ClickHouse Parameters
+    password: ""
+    # -- Existing secret containing ClickHouse credentials
+    # @section -- ClickHouse Parameters
+    existingSecret: ""
+  # -- ClickHouse resource preset
+  # @section -- ClickHouse Parameters
+  resourcesPreset: "nano"
+  # -- ClickHouse resource limits/requests
+  # @section -- ClickHouse Parameters
+  resources: {}
+
+externalClickhouse:
+  # -- External ClickHouse host
+  # @section -- ClickHouse Parameters
+  host: ""
+  # -- External ClickHouse port
+  # @section -- ClickHouse Parameters
+  port: 8123
+  # -- External ClickHouse username
+  # @section -- ClickHouse Parameters
+  user: ""
+  # -- External ClickHouse password
+  # @section -- ClickHouse Parameters
+  password: ""
+  # -- Existing secret containing external ClickHouse credentials
+  # @section -- ClickHouse Parameters
+  existingSecret: ""
+  # -- Key in existing secret containing password
+  # @section -- ClickHouse Parameters
+  existingSecretPasswordKey: ""

@@ -1,0 +1,38 @@
+deploymentMode: distributed
+frontend:
+  ingress:
+    enabled: true
+    hostname: frontend.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+backend:
+  ingress:
+    enabled: true
+    hostname: backend.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+admin:
+  ingress:
+    enabled: true
+    hostname: admin.jsonic.local
+    tls: true
+    selfSigned: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+postgresql:
+  enabled: true
+  auth:
+    username: jsonic
+    password: jsonic
+    database: jsonic
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete

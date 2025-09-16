@@ -1,0 +1,6 @@
+apiVersion: v2
+name: jsonic-enterprise
+description: A Helm chart for Jsonic Enterprise Edition
+type: application
+version: 0.1.0
+appVersion: "2024.12.1"

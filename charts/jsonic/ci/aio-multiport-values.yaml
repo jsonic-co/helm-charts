@@ -1,0 +1,14 @@
+deploymentMode: aio
+jsonic:
+  frontend:
+    enableSubpathBasedAccess: false
+postgresql:
+  enabled: true
+  auth:
+    username: jsonic
+    password: jsonic
+    database: jsonic
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete
